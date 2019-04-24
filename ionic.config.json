@@ -1,5 +1,7 @@
 {
-  "name": "my-app",
-  "integrations": {},
+  "name": "ionic-question-and-answer",
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
