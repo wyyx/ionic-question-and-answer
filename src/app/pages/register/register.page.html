@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" (tap)="back()">
+      <ion-back-button [text]="backText" class="show-back-button"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card class="ion-text-center ion-no-margin ion-padding">
+    <ion-card-content>
+      <ion-item>
+        <ion-label position="floating">用户名或邮箱</ion-label>
+        <ion-input></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">昵称</ion-label>
+        <ion-input></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">密码</ion-label>
+        <ion-input type="password"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">确认密码</ion-label>
+        <ion-input type="password"></ion-input>
+      </ion-item>
+    </ion-card-content>
+    <ion-button expand="block" (tap)="onTapRegister()">
+      注册
+    </ion-button>
+    <ion-button color="secondary" fill="outline" expand="block" (tap)="goToLoginPage()">
+      已有账号？登陆
+    </ion-button>
+  </ion-card>
+</ion-content>
