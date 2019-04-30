@@ -1,16 +1,17 @@
-import { Injectable } from '@angular/core'
+import { Injectable, Inject } from '@angular/core'
 import { Observable } from 'rxjs'
 import { HttpClient } from '@angular/common/http'
 import { BaseRestService } from './base-rest.service'
 import { LoginResponse } from '../models/login-response.model'
 import { RegisterResponse } from '../models/register-response.model.1'
+import { BASE_URL } from '../app.module'
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService extends BaseRestService {
-  constructor(private http: HttpClient) {
-    super()
+  constructor(private http: HttpClient, @Inject(BASE_URL) baseUrl: string) {
+    super(baseUrl)
   }
 
   login(mobile, password): Observable<LoginResponse> {

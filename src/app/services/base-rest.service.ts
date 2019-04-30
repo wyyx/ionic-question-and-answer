@@ -1,11 +1,11 @@
-import { BASE_URL } from '../configs/api.config';
-import { HttpHeaders } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http'
+import { Inject } from '@angular/core'
+import { BASE_URL } from '../app.module'
 
 export abstract class BaseRestService {
-  baseUrl: string = BASE_URL;
   headers = new HttpHeaders({
     'Content-Type': 'application/json'
-  });
+  })
 
-  constructor() {}
+  constructor(@Inject(BASE_URL) public baseUrl: string) {}
 }

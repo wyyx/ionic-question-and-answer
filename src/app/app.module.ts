@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core'
+import { NgModule, InjectionToken } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { RouteReuseStrategy } from '@angular/router'
 
@@ -10,6 +10,8 @@ import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
 import { IonicStorageModule } from '@ionic/storage'
 import { HttpClientModule } from '@angular/common/http'
+import { environment } from 'src/environments/environment'
+export const BASE_URL = new InjectionToken<string>('App base url')
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,7 +26,8 @@ import { HttpClientModule } from '@angular/common/http'
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    { provide: BASE_URL, useValue: environment.baseUrl }
   ],
   bootstrap: [AppComponent]
 })
