@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
 import { TabsPage } from './tabs.page'
+import { AuthGuard } from 'src/app/guards/auth.guard'
 
 const routes: Routes = [
   {
@@ -29,7 +30,7 @@ const routes: Routes = [
       },
       {
         path: 'notification',
-
+        canActivate: [AuthGuard],
         loadChildren: '../notification/notification.module#NotificationPageModule'
       },
       {

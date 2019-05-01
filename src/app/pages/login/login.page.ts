@@ -4,12 +4,13 @@ import { storageList } from 'src/app/configs/storage-list.config'
 import { User } from 'src/app/models/user.model'
 import { AuthService } from 'src/app/services/auth.service'
 import { ConfigService } from 'src/app/services/config.service'
-import { tap, catchError } from 'rxjs/operators'
+import { tap, catchError, filter, take } from 'rxjs/operators'
 import { NavController } from '@ionic/angular'
-import { Router } from '@angular/router'
+import { Router, NavigationStart, ActivatedRoute } from '@angular/router'
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
-import { mobileValidator } from 'src/app/utils/mobile.validator'
-import { of } from 'rxjs'
+import { mobileValidator } from 'src/app/validators/mobile.validator'
+import { of, Observable } from 'rxjs'
+import { ToastService } from 'src/app/services/toast.service'
 
 @Component({
   selector: 'app-login',
@@ -22,14 +23,17 @@ export class LoginPage implements OnInit {
   passwordCtl: FormControl
 
   backText: string
-  error: string
+
+  navStart: Observable<NavigationStart>
 
   constructor(
     private configService: ConfigService,
     private authService: AuthService,
+    private toastService: ToastService,
     private storage: Storage,
     private navCtl: NavController,
     private router: Router,
+    private route: ActivatedRoute,
     private fb: FormBuilder
   ) {}
 
@@ -37,6 +41,20 @@ export class LoginPage implements OnInit {
     this.backText = this.configService.backText
 
     this.setupForm()
+  }
+
+  ionViewWillEnter() {
+    this.authService
+      .isLoggedIn()
+      .pipe(
+        tap(isLoggedIn => {
+          if (isLoggedIn) {
+            this.router.navigateByUrl('/tabs/home')
+          }
+        }),
+        take(1)
+      )
+      .subscribe()
   }
 
   setupForm() {
@@ -66,17 +84,28 @@ export class LoginPage implements OnInit {
         .login(mobile, password)
         .pipe(
           tap(res => {
-            console.log('TCL: LoginPage -> login -> res', res)
+            this.toastService.presentToast({
+              message: res.StatusContent
+            })
 
-            this.storage.set(storageList.userId, res.UserId)
-            this.storage.set(storageList.user, {
-              userId: res.UserId,
-              nickName: res.UserNickName,
-              avatar: res.UserHeadface
-            } as User)
+            if (res.UserId) {
+              // save auth info
+              this.storage.set(storageList.userId, res.UserId)
+              this.storage.set(storageList.user, {
+                userId: res.UserId,
+                nickName: res.UserNickName,
+                avatar: res.UserHeadface
+              } as User)
+
+              // go to targetUrl or home page
+              const url = this.route.snapshot.queryParamMap.get('targetUrl')
+              this.router.navigate([url || '/tabs/home'])
+            }
           }),
           catchError(error => {
-            console.log('TCL: LoginPage -> login -> error', error)
+            this.toastService.presentToast({
+              message: '很抱歉，出现意外错误，请稍后再试'
+            })
             return of(error)
           })
         )
