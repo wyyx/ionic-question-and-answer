@@ -7,30 +7,65 @@
 </ion-header>
 
 <ion-content>
-  <ion-card class="ion-text-center ion-no-margin ion-padding">
-    <ion-card-content>
-      <ion-item>
-        <ion-label position="floating">用户名或邮箱</ion-label>
-        <ion-input></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">昵称</ion-label>
-        <ion-input></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">密码</ion-label>
-        <ion-input type="password"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">确认密码</ion-label>
-        <ion-input type="password"></ion-input>
-      </ion-item>
-    </ion-card-content>
-    <ion-button expand="block" (tap)="onTapRegister()">
-      注册
-    </ion-button>
-    <ion-button color="secondary" fill="outline" expand="block" (tap)="goToLoginPage()">
-      已有账号？登陆
-    </ion-button>
-  </ion-card>
+  <form [formGroup]="form">
+    <ion-card class="ion-text-center ion-no-margin ion-padding">
+      <ion-card-content>
+        <ion-item>
+          <ion-label position="floating">手机号</ion-label>
+          <ion-input formControlName="mobile"></ion-input>
+        </ion-item>
+        <div *ngIf="mobileCtl.invalid && mobileCtl.touched" class="p-5 ion-text-left">
+          <p class="error" *ngIf="mobileCtl.errors.required">手机号码不能为空</p>
+          <p class="error" *ngIf="mobileCtl.errors.mobile">
+            手机号码不合法
+          </p>
+        </div>
+
+        <ion-item>
+          <ion-label position="floating">昵称</ion-label>
+          <ion-input formControlName="nickname"></ion-input>
+        </ion-item>
+        <div *ngIf="nicknameCtl.invalid && nicknameCtl.touched" class="p-5 ion-text-left">
+          <p class="error" *ngIf="nicknameCtl.errors.required">昵称不能为空</p>
+        </div>
+
+        <ng-container formGroupName="passwordGroup">
+          <ion-item>
+            <ion-label position="floating">密码</ion-label>
+            <ion-input formControlName="password" type="password"></ion-input>
+          </ion-item>
+          <div *ngIf="passwordCtl.invalid && passwordCtl.touched" class="p-5 ion-text-left">
+            <p class="error" *ngIf="passwordCtl.errors.required">密码不能为空</p>
+            <p class="error" *ngIf="passwordCtl.errors.minlength">密码长度不能低于8位</p>
+          </div>
+
+          <ion-item>
+            <ion-label position="floating">确认密码</ion-label>
+            <ion-input formControlName="repassword" type="password"></ion-input>
+          </ion-item>
+          <div
+            *ngIf="(passwordGroupCtl.invalid || repasswordCtl.invalid) && repasswordCtl.touched"
+            class="p-5 ion-text-left"
+          >
+            <p class="error" *ngIf="repasswordCtl.errors && repasswordCtl.errors.required">
+              请再次输入密码确认
+            </p>
+            <p
+              class="error"
+              *ngIf="passwordGroupCtl.errors && passwordGroupCtl.errors.passwordsInconsistent"
+            >
+              两次密码不一致
+            </p>
+          </div>
+        </ng-container>
+      </ion-card-content>
+
+      <ion-button expand="block" (tap)="register()">
+        注册
+      </ion-button>
+      <ion-button color="secondary" fill="outline" expand="block" (tap)="goToLoginPage()">
+        已有账号？登陆
+      </ion-button>
+    </ion-card>
+  </form>
 </ion-content>

@@ -1,16 +1,12 @@
 import { Component, OnInit } from '@angular/core'
-import { Storage } from '@ionic/storage'
-import { storageList } from 'src/app/configs/storage-list.config'
-import { User } from 'src/app/models/user.model'
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
+import { ActivatedRoute, NavigationStart, Router } from '@angular/router'
+import { Observable, of, throwError } from 'rxjs'
+import { take, tap, catchError } from 'rxjs/operators'
 import { AuthService } from 'src/app/services/auth.service'
 import { ConfigService } from 'src/app/services/config.service'
-import { tap, catchError, filter, take } from 'rxjs/operators'
-import { NavController } from '@ionic/angular'
-import { Router, NavigationStart, ActivatedRoute } from '@angular/router'
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
+import { markAsTouched } from 'src/app/utils/form.util'
 import { mobileValidator } from 'src/app/validators/mobile.validator'
-import { of, Observable } from 'rxjs'
-import { ToastService } from 'src/app/services/toast.service'
 
 @Component({
   selector: 'app-login',
@@ -29,12 +25,9 @@ export class LoginPage implements OnInit {
   constructor(
     private configService: ConfigService,
     private authService: AuthService,
-    private toastService: ToastService,
-    private storage: Storage,
-    private navCtl: NavController,
     private router: Router,
-    private route: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
@@ -44,8 +37,7 @@ export class LoginPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    this.authService
-      .isLoggedIn()
+    this.authService.isLoggedIn$
       .pipe(
         tap(isLoggedIn => {
           if (isLoggedIn) {
@@ -72,10 +64,11 @@ export class LoginPage implements OnInit {
   }
 
   goToRegisterPage() {
-    this.navCtl.navigateForward('/tabs/register')
+    this.router.navigateByUrl('/tabs/register')
   }
 
   login() {
+    markAsTouched(this.form)
     const mobile = this.form.value.mobile
     const password = this.form.value.password
 
@@ -83,30 +76,15 @@ export class LoginPage implements OnInit {
       this.authService
         .login(mobile, password)
         .pipe(
+          take(1),
           tap(res => {
-            this.toastService.presentToast({
-              message: res.StatusContent
-            })
-
-            if (res.UserId) {
-              // save auth info
-              this.storage.set(storageList.userId, res.UserId)
-              this.storage.set(storageList.user, {
-                userId: res.UserId,
-                nickName: res.UserNickName,
-                avatar: res.UserHeadface
-              } as User)
-
-              // go to targetUrl or home page
-              const url = this.route.snapshot.queryParamMap.get('targetUrl')
-              this.router.navigate([url || '/tabs/home'])
+            if (res) {
+              const targetUrl = this.route.snapshot.queryParamMap.get('targetUrl')
+              this.router.navigate([targetUrl || '/tabs/home'])
             }
           }),
-          catchError(error => {
-            this.toastService.presentToast({
-              message: '很抱歉，出现意外错误，请稍后再试'
-            })
-            return of(error)
+          catchError(err => {
+            return of(null)
           })
         )
         .subscribe()

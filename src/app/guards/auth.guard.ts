@@ -11,7 +11,7 @@ export class AuthGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-    return this.authService.isLoggedIn().pipe(
+    return this.authService.isLoggedIn$.pipe(
       tap(isLoggedIn => {
         console.log('TCL: AuthGuard -> constructor -> isLoggedIn', isLoggedIn)
         if (!isLoggedIn) {

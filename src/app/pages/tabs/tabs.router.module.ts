@@ -15,17 +15,14 @@ const routes: Routes = [
     children: [
       {
         path: 'home',
-
         loadChildren: '../home/home.module#HomePageModule'
       },
       {
         path: 'explore',
-
         loadChildren: '../explore/explore.module#ExplorePageModule'
       },
       {
         path: 'market',
-
         loadChildren: '../market/market.module#MarketPageModule'
       },
       {

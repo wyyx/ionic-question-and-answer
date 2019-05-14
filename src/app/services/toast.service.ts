@@ -19,7 +19,7 @@ export class ToastService {
 
     const toast = await this.toastController.create({
       ...toastOptions,
-      duration: duration ? duration : 3000,
+      duration: duration ? duration : 2000,
       showCloseButton: showCloseButton ? showCloseButton : true,
       closeButtonText: closeButtonText ? closeButtonText : '关闭'
     })

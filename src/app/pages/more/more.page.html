@@ -4,4 +4,16 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content> </ion-content>
+<ion-content>
+  <ion-list>
+    <ion-item button detail>
+      <ion-avatar>
+        <img [src]="userInfo?.UserHeadface || defaultAvatar" />
+      </ion-avatar>
+      <ion-label class="ion-padding-start">
+        <h2>{{ userInfo?.UserNickName || '游客' }}</h2>
+        <p>xxxxxxxxxxxxxxx</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

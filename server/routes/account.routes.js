@@ -34,3 +34,19 @@ server.get('/api/account/login', (req, res) => {
       res.json(e)
     })
 })
+
+// get user info
+server.get('/api/account/userinfo', (req, res) => {
+  const url = 'https://imoocqa.gugujiankong.com' + req.path
+  console.log('TCL: url', url)
+
+  axios
+    .get(url, { params: req.query })
+    .then(response => {
+      res.json(response.data)
+    })
+    .catch(e => {
+      console.log(e)
+      res.json(e)
+    })
+})

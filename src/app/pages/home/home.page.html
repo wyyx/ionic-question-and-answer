@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-button (tap)="logout()">
+  <ion-button *ngIf="isLoggedIn$ | async" (tap)="logout()">
     退出账号
   </ion-button>
 </ion-content>

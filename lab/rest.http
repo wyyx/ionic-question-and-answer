@@ -4,3 +4,8 @@ GET https://imoocqa.gugujiankong.com/api/account/register?mobile=15822223334&nic
 
 # login
 GET https://imoocqa.gugujiankong.com/api/account/login?mobile=15822223333&password=12345678 HTTP/1.1
+###
+
+# get user info
+GET https://imoocqa.gugujiankong.com/api/account/userinfo?userid=5ce93420647eb40598e141a4 HTTP/1.1
+###

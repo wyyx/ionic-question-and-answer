@@ -20,7 +20,7 @@ server.use(cors(corsOptions))
 require('./routes')
 
 // start app
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT || 8989
 server.listen(PORT, err => {
   if (err) {
     console.log(err)
