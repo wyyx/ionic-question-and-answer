@@ -60,9 +60,9 @@ export class MorePage implements OnInit {
     this.isLoggedIn$
       .pipe(
         tap(isLoggedIn => {
-          if (isLoggedIn) {
-            this.router.navigateByUrl('/tabs/user-center')
-          }
+          // if (isLoggedIn) {
+          this.router.navigateByUrl('/tabs/user-center')
+          // }
         }),
         take(1)
       )

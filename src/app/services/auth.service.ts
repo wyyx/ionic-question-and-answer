@@ -40,6 +40,7 @@ export class AuthService {
       .pipe(
         map(res => JSON.parse(res) as LoginResponse),
         tap(res => {
+          console.log('TCL: AuthService -> res', res)
           this.toastService.showToast({
             message: res.StatusContent
           })

@@ -27,7 +27,7 @@ const routes: Routes = [
       },
       {
         path: 'notification',
-        canActivate: [AuthGuard],
+        // canActivate: [AuthGuard],
         loadChildren: '../notification/notification.module#NotificationPageModule'
       },
       {
@@ -50,6 +50,10 @@ const routes: Routes = [
       {
         path: 'user-center',
         loadChildren: '../user-center/user-center.module#UserCenterPageModule'
+      },
+      {
+        path: 'change-avatar',
+        loadChildren: '../change-avatar/change-avatar.module#ChangeAvatarPageModule'
       }
     ]
   }

@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>设置头像</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <img class="preview" [src]="lastImage" style="width:100%; height:60%;" />
+  <h3 *ngIf="!lastImage">请从图片库中选择一个图片</h3>
+
+  <img id="myImage" src="" alt="" />
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar color="primary">
+    <ion-buttons>
+      <ion-button (tap)="showActionSheet()">
+        <ion-icon name="camera"></ion-icon> <span class="pl-5">选择...</span>
+      </ion-button>
+      <ion-button *ngIf="lastImage" (tap)="uploadImage()">
+        <ion-icon name="cloud-upload"></ion-icon> <span class="pl-5">上传</span>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar></ion-footer
+>

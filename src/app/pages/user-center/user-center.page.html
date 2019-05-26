@@ -6,7 +6,7 @@
 
 <ion-content>
   <ion-list>
-    <ion-item button detail>
+    <ion-item button detail (tap)="goToChangeAvatarPage()">
       <ion-avatar>
         <img [src]="userInfo?.UserHeadface || defaultAvatar" />
       </ion-avatar>
@@ -16,8 +16,31 @@
     </ion-item>
   </ion-list>
 
-  <div class="ion-text-center">
-    <ion-button color="danger" *ngIf="isLoggedIn$ | async" (tap)="logout()">
+  <ion-list>
+    <ion-item>
+      <ion-label class="ion-padding-end">
+        <h2>用户昵称</h2>
+      </ion-label>
+      <ion-input
+        [value]="userInfo?.UserNickName"
+        [(ngModel)]="nickname"
+        #nicknameCtl="ngModel"
+        required
+      ></ion-input>
+    </ion-item>
+    <div *ngIf="nicknameCtl.invalid && nicknameCtl.touched" class="p-5 ion-text-left">
+      <p class="error" *ngIf="nicknameCtl.errors.required">昵称不能为空</p>
+    </div>
+  </ion-list>
+
+  <div class="ion-text-center ion-padding">
+    <ion-button color="primary" expand="block" (tap)="save()">
+      保存
+    </ion-button>
+  </div>
+
+  <div class="ion-text-center ion-margin-top ion-padding">
+    <ion-button color="danger" expand="block" (tap)="logout()">
       注销
     </ion-button>
   </div>
