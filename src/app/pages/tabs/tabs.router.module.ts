@@ -46,6 +46,10 @@ const routes: Routes = [
       {
         path: 'login-guide',
         loadChildren: '../login-guide/login-guide.module#LoginGuidePageModule'
+      },
+      {
+        path: 'user-center',
+        loadChildren: '../user-center/user-center.module#UserCenterPageModule'
       }
     ]
   }

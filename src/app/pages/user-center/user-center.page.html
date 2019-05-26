@@ -1,19 +1,24 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>更多</ion-title>
+    <ion-title>个人中心</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-list>
-    <ion-item button detail (tap)="goToUserCenterPage()">
+    <ion-item button detail>
       <ion-avatar>
         <img [src]="userInfo?.UserHeadface || defaultAvatar" />
       </ion-avatar>
       <ion-label class="ion-padding-start">
-        <h2>{{ userInfo?.UserNickName || '游客' }}</h2>
-        <p *ngIf="isLoggedIn$ | async">进入个人中心</p>
+        <h2>修改头像</h2>
       </ion-label>
     </ion-item>
   </ion-list>
+
+  <div class="ion-text-center">
+    <ion-button color="danger" *ngIf="isLoggedIn$ | async" (tap)="logout()">
+      注销
+    </ion-button>
+  </div>
 </ion-content>

@@ -14,7 +14,7 @@ interface ToastOptions {
 export class ToastService {
   constructor(public toastController: ToastController) {}
 
-  async presentToast(toastOptions: ToastOptions) {
+  async showToast(toastOptions: ToastOptions) {
     const { duration, showCloseButton, closeButtonText } = toastOptions
 
     const toast = await this.toastController.create({
@@ -24,5 +24,6 @@ export class ToastService {
       closeButtonText: closeButtonText ? closeButtonText : '关闭'
     })
     toast.present()
+    return toast
   }
 }
