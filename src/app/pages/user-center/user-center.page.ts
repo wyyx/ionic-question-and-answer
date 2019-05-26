@@ -20,6 +20,8 @@ export class UserCenterPage implements OnInit {
   defaultAvatar =
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAqSgntSyr5fI7nrM9WV-6jQjbqSO_q7ZcSn2uZfsbsWhS_HSn'
 
+  nickname: string
+
   constructor(
     private loadingService: LoadingService,
     private userService: UserService,
@@ -59,5 +61,14 @@ export class UserCenterPage implements OnInit {
   logout() {
     this.authService.logout()
     this.router.navigateByUrl('/tabs/more')
+  }
+
+  save() {
+    if (this.nickname && this.nickname.trim()) {
+      this.userService
+        .updateUserNickName(this.nickname)
+        .pipe(take(1))
+        .subscribe()
+    }
   }
 }
