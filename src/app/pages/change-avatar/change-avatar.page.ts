@@ -76,7 +76,7 @@ export class ChangeAvatarPage implements OnInit {
   takePicture(sourceType: PictureSourceType) {
     const options: CameraOptions = {
       quality: 5,
-      destinationType: this.camera.DestinationType.NATIVE_URI,
+      destinationType: this.camera.DestinationType.FILE_URI,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
       saveToPhotoAlbum: true,
@@ -86,7 +86,9 @@ export class ChangeAvatarPage implements OnInit {
     this.camera.getPicture(options).then(
       imagePath => {
         console.log('TCL: ChangeAvatarPage -> takePicture -> imagePath', imagePath)
-        this.lastImage = imagePath
+
+        this.lastImage = (window as any).Ionic.WebView.convertFileSrc(imagePath)
+        console.log('TCL: ChangeAvatarPage -> takePicture -> this.lastImage', this.lastImage)
       },
       err => {
         console.log('TCL: ChangeAvatarPage -> takePicture -> err', err)
