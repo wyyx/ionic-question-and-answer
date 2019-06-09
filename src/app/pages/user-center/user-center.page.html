@@ -6,7 +6,7 @@
 
 <ion-content>
   <ion-list>
-    <ion-item button detail>
+    <ion-item button detail (tap)="goToChangeAvatarPage()">
       <ion-avatar>
         <img [src]="userInfo?.UserHeadface || defaultAvatar" />
       </ion-avatar>

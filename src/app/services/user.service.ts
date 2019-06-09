@@ -7,6 +7,7 @@ import { BASE_URL } from '../app.module'
 import { storageList } from '../configs/storage-list.config'
 import { UserInfoResponse } from '../models/user-info-response.model'
 import { ToastService } from './toast.service'
+import { UpdateNicknameResponse } from '../models/update-nickname-response.model'
 
 @Injectable({
   providedIn: 'root'
@@ -53,8 +54,9 @@ export class UserService {
         }
         return of(null)
       }),
+      map(res => JSON.parse(res) as UpdateNicknameResponse),
       tap(res => {
-        console.log('TCL: UserService -> updateUserNickName -> res', res)
+        console.log('TCL: UserService -> updateUserNickName -> res', res.StatusContent)
       }),
       catchError(err => {
         this.toastService.showToast({

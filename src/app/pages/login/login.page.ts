@@ -51,8 +51,8 @@ export class LoginPage implements OnInit {
 
   setupForm() {
     this.form = this.fb.group({
-      mobile: ['', Validators.compose([Validators.required, mobileValidator])],
-      password: ['', Validators.compose([Validators.required, Validators.minLength(8)])]
+      mobile: ['15822223333', Validators.compose([Validators.required, mobileValidator])],
+      password: ['12345678', Validators.compose([Validators.required, Validators.minLength(8)])]
     })
 
     this.mobileCtl = this.form.get('mobile') as FormControl

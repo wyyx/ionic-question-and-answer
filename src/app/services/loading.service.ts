@@ -1,10 +1,6 @@
 import { ToastController, LoadingController } from '@ionic/angular'
 import { Injectable } from '@angular/core'
-
-interface LoadingOptions {
-  message: string
-  backdropDismiss: boolean
-}
+import { LoadingOptions } from '@ionic/core'
 
 @Injectable({
   providedIn: 'root'
@@ -12,9 +8,9 @@ interface LoadingOptions {
 export class LoadingService {
   constructor(private loadingCtrl: LoadingController) {}
 
-  async showLoading(loadingOptions: LoadingOptions) {
+  async showLoading(options: LoadingOptions) {
     const loading = await this.loadingCtrl.create({
-      ...loadingOptions
+      ...options
     })
 
     loading.present()

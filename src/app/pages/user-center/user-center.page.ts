@@ -71,4 +71,8 @@ export class UserCenterPage implements OnInit {
         .subscribe()
     }
   }
+
+  goToChangeAvatarPage() {
+    this.router.navigateByUrl('/tabs/change-avatar')
+  }
 }
